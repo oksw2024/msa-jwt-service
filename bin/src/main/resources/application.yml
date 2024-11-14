@@ -31,7 +31,7 @@ custom:
   jwt:
     secret: ohseokju@!ohseokju@!ohseokju@!ohseokju@!ohseokju@!
     secret2: secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!
-    accessTokenExpirationTime: 300000
+    accessTokenExpirationTime: 1800000
     refreshTokenExpirationTime: 86400000
 
 eureka:
