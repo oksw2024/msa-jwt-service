@@ -1,9 +1,9 @@
 server:
-  port: 9813
+  port: 9001
 
 spring:
   application:
-    name: MSA-JWT-SERVICE-2
+    name: MSA-JWT-SERVICE
   config:
     import: optional:configserver:http://localhost:8001
   datasource:

@@ -11,10 +11,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.annotation.PostConstruct;
 import osj.javat.detail.CustomUserDetails;
 
@@ -83,10 +85,15 @@ public class JwtTokenProvider {
         return info;
     }
 	
+	// 토큰 만료 여부 확인
 	public boolean validateToken(String accessToken) {
         try {
             Jws<Claims> claims = Jwts.parser().verifyWith(getSigningKey()).build().parseSignedClaims(accessToken);
             return !claims.getPayload().getExpiration().before(new Date());
+        } catch (ExpiredJwtException e) {
+        	return false;
+        } catch (SignatureException e) {
+        	return false;
         } catch (Exception e) {
             return false;
         }

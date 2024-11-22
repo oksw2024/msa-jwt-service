@@ -64,18 +64,15 @@ public class AuthService {
 		this.userRepository.save(requestDto.toEntity());
 	}
 	
-	// 토큰 갱신
+	// 토큰 갱신, validateToken 수정 필요
 	@Transactional
 	public String refreshToken(String refreshToken) {
-		if (this.jwtTokenProvider.validateToken(refreshToken)) {
-			Auth auth = this.authRepository.findByRefreshToken(refreshToken)
-					.orElseThrow(() -> new IllegalArgumentException("해당 refresh_token을 찾을 수 없습니다\nrefresh_token = " + refreshToken));
-			String newAccessToken = this.jwtTokenProvider.generateAccessToken(
-					new UsernamePasswordAuthenticationToken(
-							new CustomUserDetails(auth.getUser()), auth.getUser().getPassword()));
-			auth.updateAccessToken(newAccessToken);
-			return newAccessToken;
-		}
-		return null;
+		Auth auth = this.authRepository.findByRefreshToken(refreshToken)
+				.orElseThrow(() -> new IllegalArgumentException("해당 refresh_token을 찾을 수 없습니다\nrefresh_token = " + refreshToken));
+		String newAccessToken = this.jwtTokenProvider.generateAccessToken(
+				new UsernamePasswordAuthenticationToken(
+						new CustomUserDetails(auth.getUser()), auth.getUser().getPassword()));
+		auth.updateAccessToken(newAccessToken);
+		return newAccessToken;
 	}
 }
