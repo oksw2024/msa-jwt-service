@@ -29,6 +29,10 @@ public class UserService {
     public void update(Long id, UserRequestDto requestDto) {
         User user = this.userRepository.findById(id)
         		.orElseThrow(() -> new IllegalArgumentException("해당 유저를 찾을 수 없습니다. user_id = " + id));
+        
+        if (requestDto.getPassword() != null) {
+        	requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
+        }
         user.update(requestDto);
     }
 	

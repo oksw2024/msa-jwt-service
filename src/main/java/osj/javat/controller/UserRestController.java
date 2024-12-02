@@ -33,7 +33,7 @@ public class UserRestController {
 	@PutMapping("/api/v1/user")
     public ResponseEntity<?> updateUser(@RequestHeader("Authorization") String accessToken, 
                                         @RequestBody UserRequestDto requestDto) {
-        Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));
+        Long id = this.jwtTokenProvider.getUserIdFromToken(accessToken.substring(7));      
         this.userService.update(id, requestDto);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }

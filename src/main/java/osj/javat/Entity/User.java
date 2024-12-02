@@ -56,11 +56,15 @@ public class User {
 		this.role = role;
 	}
 	
-	public void update(UserRequestDto userRequest) {
-		this.loginId = userRequest.getLoginId();
-		this.email = userRequest.getEmail();
-		this.password = userRequest.getPassword();
-		this.username = userRequest.getUsername();
-		this.role = userRequest.getRole();
+	public void update(UserRequestDto requestDto) {
+		if (requestDto.getUsername() != null) {
+			this.username = requestDto.getUsername();
+		}
+		if (requestDto.getEmail() != null) {
+			this.email = requestDto.getEmail();
+		}
+		if (requestDto.getPassword() != null) {
+			this.password = requestDto.getPassword();
+		}
 	}
 }

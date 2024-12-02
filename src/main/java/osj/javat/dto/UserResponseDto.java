@@ -9,6 +9,7 @@ import osj.javat.Entity.User;
 public class UserResponseDto {
 	private Long id;
 	private String role;
+	private String password;
 	private String email;
 	private String loginId;
 	private String username;
@@ -16,6 +17,7 @@ public class UserResponseDto {
 	public UserResponseDto(User entity) {
 		this.id = entity.getId();
 		this.email = entity.getEmail();
+		this.password = entity.getPassword();
 		this.loginId = entity.getLoginId();
 		this.username = entity.getUsername();
 		// Enum Type -> String Type
