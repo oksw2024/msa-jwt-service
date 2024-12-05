@@ -32,7 +32,7 @@ custom:
     secret: ohseokju@!ohseokju@!ohseokju@!ohseokju@!ohseokju@!
     secret2: secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!
     accessTokenExpirationTime: 300000
-    refreshTokenExpirationTime: 86400000
+    refreshTokenExpirationTime: 62208000000
 
 eureka:
   client:

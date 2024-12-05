@@ -2,16 +2,14 @@ package osj.javat.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.RequiredArgsConstructor;
+import osj.javat.dto.ApiResponse;
+import osj.javat.dto.PasswordChangeRequest;
 import osj.javat.dto.UserRequestDto;
 import osj.javat.dto.UserResponseDto;
+import osj.javat.exception.InvalidPasswordException;
 import osj.javat.security.JwtTokenProvider;
 import osj.javat.service.UserService;
 
@@ -45,4 +43,20 @@ public class UserRestController {
         this.userService.delete(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
+
+	// 비밀번호 검증
+	@PostMapping("/api/v1/user/change-password")
+	public ResponseEntity<?> changePassword(@RequestHeader("Authorization") String token,
+											@RequestBody PasswordChangeRequest request) {
+		try {
+			String accessToken = token.replace("Bearer ", ""); // Access token 추출
+			userService.changePassword(accessToken, request);
+			return ResponseEntity.ok(new ApiResponse(true, "비밀번호가 성공적으로 변경되었습니다."));
+		} catch (InvalidPasswordException e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(false, e.getMessage()));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse(false, "비밀번호 변경 오류"));
+		}
+	}
 }

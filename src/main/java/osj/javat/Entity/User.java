@@ -10,10 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import osj.javat.dto.UserRequestDto;
 
 @Getter
@@ -34,7 +31,8 @@ public class User {
 	@Column(name="loginId", nullable=false, unique=true)
 	private String loginId;
 	
-	@Column(name="password", nullable=false)
+	@Setter
+    @Column(name="password", nullable=false)
 	private String password;
 	
 	@Column(name="username", nullable=false, unique=true)
@@ -67,4 +65,5 @@ public class User {
 			this.password = requestDto.getPassword();
 		}
 	}
+
 }

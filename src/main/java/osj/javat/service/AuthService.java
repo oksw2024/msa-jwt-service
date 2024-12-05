@@ -14,6 +14,7 @@ import osj.javat.detail.CustomUserDetails;
 import osj.javat.dto.AuthRequestDto;
 import osj.javat.dto.AuthResponseDto;
 import osj.javat.dto.UserRequestDto;
+import osj.javat.exception.DuplicateLoginIdException;
 import osj.javat.repository.AuthRepository;
 import osj.javat.repository.UserRepository;
 import osj.javat.security.JwtTokenProvider;
@@ -58,6 +59,11 @@ public class AuthService {
 	// 회원가입
 	@Transactional
 	public void signup(UserRequestDto requestDto) {
+		// 아이디 중복 검증
+		if (isLoginIdExists(requestDto.getLoginId())) {
+			throw new DuplicateLoginIdException("이미 사용 중인 아이디입니다.");
+		}
+
 		// create 기능
 		requestDto.setRole(Role.ROLE_USER);
 		requestDto.setPassword(passwordEncoder.encode(requestDto.getPassword()));
@@ -74,5 +80,10 @@ public class AuthService {
 						new CustomUserDetails(auth.getUser()), auth.getUser().getPassword()));
 		auth.updateAccessToken(newAccessToken);
 		return newAccessToken;
+	}
+
+	//회원가입 아이디 중복 확인
+	public boolean isLoginIdExists(String loginId) {
+		return userRepository.existsByLoginId(loginId);
 	}
 }
