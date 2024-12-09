@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: MSA-JWT-SERVICE
+  profiles:
+    active: local
   config:
     import: optional:configserver:http://localhost:8001
   datasource:
@@ -27,12 +29,11 @@ logging:
     org:
       hibernate: info
 
-custom:
-  jwt:
-    secret: ohseokju@!ohseokju@!ohseokju@!ohseokju@!ohseokju@!
-    secret2: secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!
-    accessTokenExpirationTime: 300000
-    refreshTokenExpirationTime: 62208000000
+#jwt:
+#  secret: ohseokju@!ohseokju@!ohseokju@!ohseokju@!ohseokju@!
+#  secret2: secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!secretrefreshkey@!
+#  accessTokenExpirationTime: 1000
+#  refreshTokenExpirationTime: 2592000000
 
 eureka:
   client:
@@ -43,3 +44,8 @@ eureka:
   instance:
     prefer-ip-address: true
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh

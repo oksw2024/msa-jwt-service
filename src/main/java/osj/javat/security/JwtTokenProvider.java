@@ -23,14 +23,14 @@ import osj.javat.detail.CustomUserDetails;
 @Component
 public class JwtTokenProvider {
 	//access token용 secret key
-	@Value("${custom.jwt.secret}")
+	@Value("${jwt.secret}")
 	private String jwtSecretKey;
 	//refresh token용 secret key
-	@Value("${custom.jwt.secret2}")
+	@Value("${jwt.secret2}")
 	private String jwtSecretKey2;
-	@Value("${custom.jwt.accessTokenExpirationTime}")
+	@Value("${jwt.accessTokenExpirationTime}")
 	private Long jwtAccessTokenExpirationTime;
-	@Value("${custom.jwt.refreshTokenExpirationTime}")
+	@Value("${jwt.refreshTokenExpirationTime}")
 	private Long jwtRefreshTokenExpirationTime;
 	
 	@PostConstruct
